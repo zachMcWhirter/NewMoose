@@ -6,6 +6,7 @@ namespace NewMoose
     {
         static void Main(string[] args)
         {
+            Console.Clear();
             Console.WriteLine("Welcome to the Enthusiastic Moose Simulator!");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine();
@@ -15,69 +16,50 @@ namespace NewMoose
             MooseSays("And I'm really enthusiastic!");
 
                 // Moose has some questions for the user
-            CanadaQuestion();
-            EnthusiasticQuestion();
-            LoveCSharpQuestion();
-            SecretQuestion();
+            Question("Is Canada real?", "Really? It seems very unlikely.", "I  K N E W  I T !!!");
+            Question("Are you enthusiastic?", "Oh Yeah!!!" ,"You should try it!");
+            Question("Do you love C# yet?", "You must have an amazing instructor!", "You will...oh, yes, you will...");
+            Question("Do you want to know a secret?", "ME TOO!!!! I love secrets...tell me one!", "Oh, no...secrets are the best, I love to share them!");
         }
 
-        static void CanadaQuestion()
+        // Refactor to create a Question method that can be used for all the instances of Question
+        // Question() takes three arguments:
+            // 1) the question string
+            // 2) string response if user answers yes
+            // 3) string response if user answers no
+        static void Question(string question, string yes, string no)
         {
-            bool isTrue = MooseAsks("Is Canada real?");
+            bool isTrue = MooseAsks(question);
 
             if (isTrue)
             {
-                MooseSays("Really? It seems very unlikely.");
+                Console.Clear();
+                MooseSays(yes);
             }
             else
             {
-                MooseSays("I  K N E W  I T !!!");
+                Console.Clear();
+                MooseSays(no);
             }
         }
 
-        static void EnthusiasticQuestion()
+        static bool MooseAsks(string question)
         {
-            bool isEnthusiastic = MooseAsks("Are you enthusiastic?");
-            
-            if(isEnthusiastic)
-            {
-                MooseSays("Oh Yeah!!!");
-            }
-            else
-            {
-                MooseSays("You should try it!");
-            }
-        }   
+            Console.Write($"{question} (Y/N): ");
+            string answer = Console.ReadLine().ToLower();
 
-        static void LoveCSharpQuestion()
-        {
-            bool doesLoveCSharp = MooseAsks("Do you love C# yet?");
+            while (answer != "y" && answer != "n")
+            {
+                Console.Write($"{ question} (Y / N): ");
+                answer = Console.ReadLine().ToLower();
+            }
 
-            if(doesLoveCSharp)
-            {
-                MooseSays("You must have an amazing instructor!");
-            }
-            else
-            {
-                MooseSays("You will...oh, yes, you will...");
-            }
+            Console.Clear();
+
+            return (answer == "y");
+
         }
 
-        static void SecretQuestion()
-        {
-            bool isEverythingFine = MooseAsks("Do you want to know a secret?");
-
-            if(isEverythingFine)
-            {
-                MooseSays("ME TOO!!!! I love secrets...tell me one!");
-            }
-            else
-            {
-                MooseSays("Oh, no...secrets are the best, I love to share them!");
-            }
-        }
-
-        
         static void MooseSays(string message)
         {
             // Add the '@' before the string to allow for a multi-line string
@@ -112,26 +94,13 @@ namespace NewMoose
                        `^^` `^^^`
             ");
         }
+    }
 
-        static bool MooseAsks(string question)
-        {
-            Console.Write($"{question} (Y/N): ");
-            string answer = Console.ReadLine().ToLower();
-
-            while (answer != "y" && answer != "n")
-            {
-                Console.Write($"{ question} (Y / N): ");
-                answer = Console.ReadLine().ToLower();
-            }
-
-            if (answer == "y")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+    // Refactor to give Question its own class that can be instantiated
+    public class Question
+    {
+        public string Taco { get; set; }
+        public string Yes { get; set; }
+        public string No { get; set; }
     }
 }
